@@ -15,7 +15,7 @@ exports.phoneverification = (otp, phone) => {
                 status: "phone"
             }
         }, {new: true}).then((users) => {
-            let userPhone = users._doc.registerObj.phone;
+            let userPhone = users._doc.registerObj.Phone;
             if (userPhone === phone) {
                 resolve({status: 201, usr: users,message:"otp verified"})
             }else{ 

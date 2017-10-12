@@ -7,7 +7,7 @@ const report = require('../models/report');
 const nem = require("nem-sdk").default;
 var decoded= [];
 var profileObj =[];
-var growable =[];
+var growableObj =[];
 exports.getProfile = ((address) =>{
 
    return new Promise((resolve, reject) => {
@@ -25,21 +25,33 @@ exports.getProfile = ((address) =>{
 	else{
 		var message= (res.data[i].transaction.message.payload);
       decoded.push(nem.utils.format.hexToUtf8(message));
-	    console.log(decoded)
-		
+    }
+}
 		report.find({"referenceid":decoded})
 
 		.then(reports => {
-                console.log(reports)
-                profileObj.push(reports[0]._doc.profileObj)
-                for(let i=1;i<reports.length;i++){
+               console.log("length of reports",reports.length)
+                for(let i=0;i<reports.length;i++){
 
+                    if(reports[i]._doc.profileObj){
+                       
+                        profileObj.push({"profileObj":reports[i]._doc.profileObj,
+                                              "date":reports[i]._doc.created_at})
+                    }else{
+                        growableObj.push({"growableObj":reports[i]._doc.growableObj,
+                        "date":reports[i]._doc.created_at})
+                    }
+                    
+                    
                 }
+               // console.log("profileObj",profileObj)
+
 			if(reports.length!=0){
 
 			resolve({
                         status: 200,
-                        reports: reports
+                        "growableObj": growableObj,
+                        "profileObj":profileObj
                     });
 
                  }else {
@@ -57,10 +69,6 @@ exports.getProfile = ((address) =>{
                 message: 'internal server error!'
             }));
 
-	}
-	}
-}, function(err) {
-	console.error(err);
-});
-   })
-});
+	})
+	})
+})

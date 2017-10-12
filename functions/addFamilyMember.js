@@ -22,7 +22,7 @@ exports.add = (rapidID,fmRapidID) =>
                 if(owner[0].rapidID === fmRapidID){
                     resolve({
                         status: 200,
-                        users: users[0]
+                        message: "user added"
                     });
                 }
                 else{

@@ -240,7 +240,8 @@ router.post("/addFamilyMember",(req,res)=>{
      const requestObj = getAddress(req);
      const rapidID = requestObj.users.rapidID;
      const fmRapidID =req.body.rapidID
-
+     console.log("rapidID",rapidID,"fmRapidID",fmRapidID)
+     
 
      if(!fmRapidID){
         res.status(400).json({message:"invalid request"})
@@ -454,7 +455,8 @@ router.post('/updateProfile', (req, res) => {
 
                   .then(result => {
                         res.status(result.status).json({
-                        message: result.reports
+                        profileObj:result.profileObj,
+                        growableObj:result.growableObj
 
                         });
 
