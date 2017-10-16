@@ -14,6 +14,7 @@ const nem = require("nem-sdk").default;
  const verifyphone = require('./functions/phoneverification');
  const verifyemail = require('./functions/emailverification');
  const login = require('./functions/login');
+ const fmgetProfile = require('./functions/fmgetProfile')
  const addFamilyMember = require('./functions/addFamilyMember')
   const getfamilymembers = require('./functions/getfamilymembers')
  const buildProfile =require('./functions/buildprofile');
@@ -104,7 +105,7 @@ if (!Email || !Password) {
 
             .then(result => {
                 
-         var remoteHost = "192.168.1.21:8080"
+         var remoteHost = "192.168.0.20:8000"
  var link = "http://" + remoteHost + "/email/verify?mail=" + encodedMail;
 console.log(link);
                     var otptosend = otp;
@@ -166,7 +167,7 @@ console.log(link);
                     res.status(result.status).json({
                         message: result.message,
                         token: token,
-                        user:result.users.Type
+                        user:result.users.registerObj.FirstName
                        
                     });
                     
@@ -198,7 +199,7 @@ console.log(link);
         });
         
 //==================================================================================//
-        router.post("/user/phoneverification", cors(),(req, res) => {
+        router.post("/user/phoneverification",(req, res) => {
            const phone = req.body.Phone;
            console.log("phone",phone);
             var otp = parseInt(req.body.Otp);
@@ -329,38 +330,7 @@ message: err.message
         }
         });
  //===========================================================================//
- router.post('/FMbuildProfile', (req, res) => {
-    if (!checkToken(req)) {
-       console.log("invalid token")
-       return res.status(401).json({
-           message: "invalid token"
-       })
-    }
-    const rapidID = req.body.rapidID;
-     const rAddress = "MAXS2BX5ZYI7H6ULCSFT7RT5A3CNJO2VQC7AWP5H";
-     const profileObj = req.body.profileObj;
-     console.log("profileObj",profileObj);
-     const referenceid =crypto.createHash('sha256').update(JSON.stringify(profileObj)).digest('base64');
-     console.log("refernce id",referenceid) 
-    
-    if(!rapidID||!profileObj){
-        res.status(400).json({message:"invalid request"})
-    }
-   
-       else{
-           fmBuildProfile.dotx(rAddress,profileObj,referenceid,rapidID)
-
-             .then(result => {
-                   res.status(result.status).json({
-                   message: result.message
-                   });
-
-       })
-    .catch(err => res.status(err.status).json({
-           message: err.message
-       }))
-   }
-   });       
+ 
 //===========================================================================//
 router.post('/updateProfile', (req, res) => {
     if (!checkToken(req)) {
@@ -404,40 +374,7 @@ router.post('/updateProfile', (req, res) => {
    }
    });
    //===========================================================================================//
-   router.post('/fmUpdateProfile', (req, res) => {
-    if (!checkToken(req)) {
-       console.log("invalid token")
-       return res.status(401).json({
-           message: "invalid token"
-       })
-    }
-    const rapidID = req.body.rapidID;
-     const rAddress = "MAXS2BX5ZYI7H6ULCSFT7RT5A3CNJO2VQC7AWP5H";
-     const growableObj = req.body.growableObj;
-     console.log("growableObj",growableObj);
-     const referenceid =crypto.createHash('sha256').update(JSON.stringify(growableObj)).digest('base64');
-     console.log("refernce id",referenceid) 
-    
-    if(!rapidID||!growableObj){
-        res.status(400).json({message:"invalid request"})
-    }
-   
-       else{
-        fmUpdateProfile.dotx(rAddress,growableObj,referenceid,rapidID)
-
-             .then(result => {
-                   res.status(result.status).json({
-                   message: result.message
-                   });
-
-       })
-    .catch(err => res.status(err.status).json({
-           message: err.message
-       }))
-   }
-   });       
-
-
+  
 
    //===========================================================================================//        
         router.get("/getProfile",(req,res) =>{
@@ -455,7 +392,7 @@ router.post('/updateProfile', (req, res) => {
 
                   .then(result => {
                         res.status(result.status).json({
-                        profileObj:result.profileObj,
+                        profileObj:result.profileObj[0],
                         growableObj:result.growableObj
 
                         });
@@ -467,6 +404,31 @@ router.post('/updateProfile', (req, res) => {
                    
         }
     )
+    //========================================================================================//
+    router.post("/fmgetProfile",(req,res) =>{
+        if (!checkToken(req)) {
+      console.log("invalid token")
+      return res.status(401).json({
+          message: "invalid token"
+      })
+   }
+  const rapidID = req.body.rapidID
+  fmgetProfile.fmgetProfile(rapidID)
+
+            .then(result => {
+                  res.status(result.status).json({
+                  profileObj:result.profileObj[0],
+                  growableObj:result.growableObj
+
+                  });
+
+      })
+               .catch(err => res.status(err.status).json({
+          message: err.message
+      }));
+             
+  }
+)
     //===========================================================================//
     router.post('/editProfile', (req, res) => {
          if (!checkToken(req)) {
@@ -560,7 +522,7 @@ router.post('/updateProfile', (req, res) => {
 
     });
                  
-//========================================================================//     
+//==================================================================================================//     
 //check sending
 router.get('/getresults',(req,res)=>{ 
              var token =req.query.token
@@ -579,11 +541,29 @@ router.get('/getresults',(req,res)=>{
 }));
 
 });
+//==================================================================================//
+router.get('/fmgetresults',(req,res)=>{ 
+    var rapidID =req.query.rapidID
+    console.log(rapidID)
+getresults.reports(rapidID)
+.then(result => {  
+
+              
+   res.render('index', {title:"PHR", permanent:result.message})
+})
+.catch(err => res.status(err.status).json({
+message: err.message
+}));
+
+});
 
 //======================================================================//
 router.post("/shareReports",(req,res)=>{
     const email = req.body.email
+    console.log(email)
+
     const token = req.body.token
+    console.log(token)
     if(!email||!token){
         res.status(400).json({
             message: 'Invalid Request !'
@@ -592,7 +572,7 @@ router.post("/shareReports",(req,res)=>{
     console.log("hello")
 
     
-    var remoteHost = "192.168.0.19:8080"
+    var remoteHost = "192.168.0.20:8000"
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
    console.log(link);
                        var mailOptions = {
@@ -616,7 +596,43 @@ router.post("/shareReports",(req,res)=>{
          
         }
     });
+//=============================================================================================//
+router.post("/fmshareReports",(req,res)=>{
+    const email = req.body.email
+    const token = req.body.token
+    const rapidID = req.body.rapidID
+    if(!email||!token,rapidID){
+        res.status(400).json({
+            message: 'Invalid Request !'
+    })
+} else {
+    console.log("hello")
 
+    
+    var remoteHost = "192.168.0.20:8000"
+    var link = "http://" + remoteHost + "/getresults/?rapidID=" + rapidID;
+   console.log(link);
+                       var mailOptions = {
+                           transport: transporter,
+                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
+                           to: email,
+                           subject: 'click the link to get result',
+   
+                           html: "Hello,<br> Please Click on the link to see reports.<br><a href=" + link + ">Click here to see reports</a>"
+                       };
+                       transporter.sendMail(mailOptions, (error, info) => {
+                           if (error) {}
+                        });
+
+                       res.status(200).json({
+                        message: "email sent"
+                      
+                    })
+
+            
+         
+        }
+    });
 
 //===========================================================================
          function checkToken(req) {

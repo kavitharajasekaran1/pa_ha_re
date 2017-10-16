@@ -1,38 +1,16 @@
 'use strict';
 
-
-const user = require('../models/user');
 const report = require('../models/report');
 
-const nem = require("nem-sdk").default;
+exports.fmgetProfile = ((rapidID) =>{
 
-
-exports.getProfile = ((address) =>{
-    var decoded= [];
    return new Promise((resolve, reject) => {
-       // create an endpoint
-        var endpoint =nem.model.objects.create("endpoint")("http://b1.nem.foundation", "7895");
-      //call for getting account data of a particular user
-        nem.com.requests.account.transactions.all(endpoint, address)
-        .then(function(res) {
-	console.log("\nAll transactions of the account:");
-	for (let i=0;i<res.data.length;i++){
-		if(!res.data[i].transaction.message)
-			{
-    console.log("error");
-	}
-	else{
-		var message= (res.data[i].transaction.message.payload);
-      decoded.push(nem.utils.format.hexToUtf8(message));
-    
-    }
-}
-console.log(decoded)
-		report.find({"referenceid":decoded})
+   
+		report.find({"rapidID":rapidID})
 
 		.then(reports => {
-            var profileObj =[];
-            var growableObj =[];
+            var profileObj=[];
+            var growableObj=[];
                console.log("length of reports",reports.length)
                 for(let i=0;i<reports.length;i++){
 
@@ -55,6 +33,7 @@ console.log(decoded)
                     
                     
                 }
+               // console.log("profileObj",profileObj)
 
 			if(reports.length!=0){
 
@@ -81,4 +60,3 @@ console.log(decoded)
 
 	})
 	})
-})
