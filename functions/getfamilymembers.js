@@ -12,7 +12,6 @@ exports.getfamilymembers = ((rapidID) =>{
 		.then(users => {
             var name =[];
           var members =users[0].familyMembers
-          console.log(members)
              user.find({"rapidID":members})
                 .then(member =>{
                     if(members.length>=1){

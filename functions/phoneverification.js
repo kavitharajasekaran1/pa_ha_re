@@ -6,8 +6,6 @@ exports.phoneverification = (otp, phone) => {
 
     return new Promise((resolve, reject) => {
 
-        console.log(phone)
-        console.log(otp)
         user.findOneAndUpdate({
             otp: otp
         }, {

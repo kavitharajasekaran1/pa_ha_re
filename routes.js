@@ -11,6 +11,7 @@ var cors = require('cors');
 
 const nem = require("nem-sdk").default;
  const register = require('./functions/register');
+ const builded = require('./functions/builded');
  const verifyphone = require('./functions/phoneverification');
  const verifyemail = require('./functions/emailverification');
  const login = require('./functions/login');
@@ -59,7 +60,6 @@ router.post('/registerUser', cors(),function(req,res)
 {
 
 const registerObj = req.body.registerObj;
-console.log(registerObj.Phone);
 const Email = req.body.Email;
  const Password = req.body.Password;
 const rapidID = crypto.createHash('sha256').update(Email).digest('base64');
@@ -69,15 +69,14 @@ var possible = "0123456789";
 for (var i = 0; i < 4; i++) 
     otp += possible.charAt(Math.floor(Math.random() * possible.length));
 var encodedMail = new Buffer(Email).toString('base64');
-console.log(encodedMail);
 var Type = req.body.UserType;
-console.log(Type);
        // Set a wallet name
 const walletName = Email;
 // Set a password
 const password = Password;
 // Create PRNG wallet
 const nem_id = nem.model.wallet.createPRNG(walletName, password, nem.model.network.data.mijin.id);
+console.log(nem_id);
 var endpoint =nem.model.objects.create("endpoint")("http://b1.nem.foundation", "7895");
 // Create a common object
  var common = nem.model.objects.create("common")(password, "");
@@ -233,7 +232,6 @@ console.log(link);
 //================================================================================//
 router.post("/addFamilyMember",(req,res)=>{
     if (!checkToken(req)) {
-        console.log("invalid token")
         return res.status(401).json({
             message: "invalid token"
         })
@@ -300,14 +298,10 @@ message: err.message
          console.log("address",address)
          const rAddress = "MAXS2BX5ZYI7H6ULCSFT7RT5A3CNJO2VQC7AWP5H";
          const profileObj = req.body.profileObj;
-         console.log("profileObj============",profileObj);
          const referenceid =crypto.createHash('sha256').update(JSON.stringify(profileObj)).digest('base64');
          console.log("refernce id",referenceid)
-         console.log(requestObj.users.Password);
          const password = requestObj.users.Password;
-          console.log("password",password);
          const privateKey = requestObj.users.privateKey;
-         console.log("privateKey",privateKey);
          const rapidID = requestObj.users.rapidID;
          console.log("rapidID",rapidID);
 
@@ -344,16 +338,11 @@ router.post('/updateProfile', (req, res) => {
     console.log("address",address)
     const rAddress = "MAXS2BX5ZYI7H6ULCSFT7RT5A3CNJO2VQC7AWP5H";
      const growableObj = req.body.growableObj;
-    console.log("growable",growableObj);
     const referenceid =crypto.createHash('sha256').update(JSON.stringify(growableObj)).digest('base64');
-    console.log("refernce id",referenceid)
-    console.log(requestObj.users.Password);
+    console.log("refernce id",referenceid);
     const password = requestObj.users.Password;
-     console.log("password",password);
     const privateKey = requestObj.users.privateKey;
-    console.log("privateKey",privateKey);
     const rapidID = requestObj.users.rapidID;
-    console.log("rapidID",rapidID);
 
     if(!address||!growableObj){
         res.status(400).json({message:"invalid request"})
@@ -374,7 +363,27 @@ router.post('/updateProfile', (req, res) => {
    }
    });
    //===========================================================================================//
-  
+  router.get("/builded",(req,res) =>{
+    if (!checkToken(req)) {
+        console.log("invalid token")
+        return res.status(401).json({
+            message: "invalid token"
+        })
+     }
+     const address1 = getAddress(req);
+     const rapidID = address1.users.rapidID;
+     builded.builded(rapidID)
+     
+                       .then(result => {
+                             res.status(result.status).json({
+                             message:result.message
+                             });
+     
+                 })
+                          .catch(err => res.status(err.status).json({
+                     message: err.message
+                 }));
+  })
 
    //===========================================================================================//        
         router.get("/getProfile",(req,res) =>{
@@ -579,7 +588,7 @@ router.post("/shareReports",(req,res)=>{
                            transport: transporter,
                            from: '"PHR Service"<risabh.sharma@rapidqube.com>',
                            to: email,
-                           subject: 'click the link to get result',
+                           subject: 'click the link to check reports',
    
                            html: "Hello,<br> Please Click on the link to see reports.<br><a href=" + link + ">Click here to see reports</a>"
                        };
@@ -601,7 +610,7 @@ router.post("/fmshareReports",(req,res)=>{
     const email = req.body.email
     const token = req.body.token
     const rapidID = req.body.rapidID
-    if(!email||!token,rapidID){
+    if(!email||!token||!rapidID){
         res.status(400).json({
             message: 'Invalid Request !'
     })
@@ -610,7 +619,7 @@ router.post("/fmshareReports",(req,res)=>{
 
     
     var remoteHost = "192.168.0.20:8000"
-    var link = "http://" + remoteHost + "/getresults/?rapidID=" + rapidID;
+    var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + rapidID;
    console.log(link);
                        var mailOptions = {
                            transport: transporter,

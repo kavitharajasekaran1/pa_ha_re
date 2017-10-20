@@ -6,7 +6,7 @@ var nem = require("nem-sdk").default;
 
 exports.dotx =(rAddress,address,profileObj,password,privateKey,referenceid,rapidID) =>{
  return    new Promise((resolve, reject) => {
-     console.log("rapidID",rapidID);
+     
         // Create an NIS endpoint object
 var endpoint =nem.model.objects.create("endpoint")("http://b1.nem.foundation", "7895");
 
@@ -32,7 +32,6 @@ var transactionEntity = nem.model.transactions.prepare("transferTransaction")(co
                 });
               
                 newReport.save()
-                console.log(newReport)
             })
     
             .then(() => resolve({

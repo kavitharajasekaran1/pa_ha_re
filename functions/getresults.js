@@ -1,7 +1,8 @@
 'use strict';
 const report = require('../models/report');
-var record = [];
+
 exports.reports=(rapidID) =>{
+    var record = [];
  return    new Promise((resolve, reject) => {
 
         report.find({
@@ -11,7 +12,6 @@ exports.reports=(rapidID) =>{
          
             for(let i=0;i<reports.length;i++){
               record.push(reports[i])
-              console.log(record)
             }
         })
         .then(() =>resolve({
