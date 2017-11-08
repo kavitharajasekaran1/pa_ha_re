@@ -30,7 +30,7 @@ exports.getfamilymembers = ((rapidID) =>{
 
                     reject({
                         status: 402,
-                        message: 'profile not built yet'
+                        message: 'Profile Not Built Yet'
                     });
                 }
             })
@@ -40,7 +40,7 @@ exports.getfamilymembers = ((rapidID) =>{
             
             .catch(err => reject({
                 status: 500,
-                message: 'internal server error!'
+                message: 'Internal Server Error!'
             }));
 
     })

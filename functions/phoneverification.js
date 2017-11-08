@@ -17,13 +17,13 @@ exports.phoneverification = (otp, phone) => {
             if (userPhone === phone) {
                 resolve({status: 201, usr: users,message:"otp verified"})
             }else{ 
-                resolve({status: 402, message: "not a valid phone no"})
+                resolve({status: 402, message: "Not a valid phone no"})
             }
         }).catch(err => {
 
             if (err.code == 11000) {
 
-                return reject({status: 409, message: 'cant fetch !'});
+                return reject({status: 409, message: 'Cant Fetch !'});
 
             } else {
                 console.log("error occurred" + err);

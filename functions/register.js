@@ -29,7 +29,7 @@ exports.registerUser = (registerObj,Email,Password,Type,nem_id,rapidID,privateKe
 
             .then(() => resolve({
                 status: 201,
-                message: 'please verify your mobile no and email id!'
+                message: 'Please verify your mobile no and email id!'
             }))
 
             .catch(err => {
@@ -45,7 +45,7 @@ exports.registerUser = (registerObj,Email,Password,Type,nem_id,rapidID,privateKe
 
                     reject({
                         status: 500,
-                        message: 'please register !'
+                        message: 'Please Register !'
                     });
                 }
             });

@@ -104,7 +104,7 @@ if (!Email || !Password) {
 
             .then(result => {
                 
-         var remoteHost = "192.168.0.20:8000"
+         var remoteHost = "119.81.59.59:8000"
  var link = "http://" + remoteHost + "/email/verify?mail=" + encodedMail;
 console.log(link);
                     var otptosend = otp;
@@ -188,10 +188,10 @@ console.log(link);
                 .then(result => {
                     var status = result.usr.status
                     if (status.length == 2) {
-                        res.send({"status": true, "message": "registration successful"});
+                        res.send({"status": true, "message": "Registration Successful"});
                     } else {
     
-                        res.send({"status": false, "message": "please verify mobile no too"});
+                        res.send({"status": false, "message": "Please verify mobile no too"});
                     }
                 })
                 .catch(err => res.status(err.status).json({message: err.message}));
@@ -211,7 +211,7 @@ console.log(link);
                     if (status.length == 2) {
                        res
                             .status(result.status)
-                            .json({message: "registration successful", status: true})
+                            .json({message: "Registration Successful", status: true})
                     } else {
     
                         if (result.status === 404) {
@@ -221,7 +221,7 @@ console.log(link);
                         } else {
                             res
                                 .status(200)
-                                .json({message: "please verify emailid too", status: false});
+                                .json({message: "Please verify emailid too", status: false});
     
                         }
                    }
@@ -233,7 +233,7 @@ console.log(link);
 router.post("/addFamilyMember",(req,res)=>{
     if (!checkToken(req)) {
         return res.status(401).json({
-            message: "invalid token"
+            message: "Invalid Token"
         })
      }
      const requestObj = getAddress(req);
@@ -243,7 +243,7 @@ router.post("/addFamilyMember",(req,res)=>{
      
 
      if(!fmRapidID){
-        res.status(400).json({message:"invalid request"})
+        res.status(400).json({message:"Invalid Request"})
     }
    
        else{
@@ -265,12 +265,13 @@ router.get('/fetchfamilyMembers',(req,res)=>{
     if (!checkToken(req)) {
         console.log("invalid token")
         return res.status(401).json({
-            message: "invalid token"
+            message: "Invalid Token"
         })
      }
      const requestObj = getAddress(req);
      
      const rapidID = requestObj.users.rapidID;
+     console.log(rapidID)
      
      getfamilymembers.getfamilymembers(rapidID)
       
@@ -290,7 +291,7 @@ message: err.message
          if (!checkToken(req)) {
             console.log("invalid token")
             return res.status(401).json({
-                message: "invalid token"
+                message: "Invalid Token"
             })
          }
          const requestObj = getAddress(req);
@@ -306,7 +307,7 @@ message: err.message
          console.log("rapidID",rapidID);
 
          if(!address||!profileObj){
-             res.status(400).json({message:"invalid request"})
+             res.status(400).json({message:"Invalid Request"})
          }
         
             else{
@@ -330,7 +331,7 @@ router.post('/updateProfile', (req, res) => {
     if (!checkToken(req)) {
        console.log("invalid token")
        return res.status(401).json({
-           message: "invalid token"
+           message: "Invalid Token"
        })
     }
     const requestObj = getAddress(req);
@@ -345,7 +346,7 @@ router.post('/updateProfile', (req, res) => {
     const rapidID = requestObj.users.rapidID;
 
     if(!address||!growableObj){
-        res.status(400).json({message:"invalid request"})
+        res.status(400).json({message:"Invalid Request"})
     }
    
        else{
@@ -367,7 +368,7 @@ router.post('/updateProfile', (req, res) => {
     if (!checkToken(req)) {
         console.log("invalid token")
         return res.status(401).json({
-            message: "invalid token"
+            message: "Invalid Token"
         })
      }
      const address1 = getAddress(req);
@@ -390,7 +391,7 @@ router.post('/updateProfile', (req, res) => {
               if (!checkToken(req)) {
             console.log("invalid token")
             return res.status(401).json({
-                message: "invalid token"
+                message: "Invalid Token"
             })
          }
         const address1 = getAddress(req);
@@ -418,7 +419,7 @@ router.post('/updateProfile', (req, res) => {
         if (!checkToken(req)) {
       console.log("invalid token")
       return res.status(401).json({
-          message: "invalid token"
+          message: "Invalid Token"
       })
    }
   const rapidID = req.body.rapidID
@@ -443,7 +444,7 @@ router.post('/updateProfile', (req, res) => {
          if (!checkToken(req)) {
             console.log("invalid token")
             return res.status(401).json({
-                message: "invalid token"
+                message: "Invalid Token"
             })
          }
          const address1 = getAddress(req);
@@ -453,7 +454,7 @@ router.post('/updateProfile', (req, res) => {
         const Address = req.body.Address;
 
          if(!address||!profileObj){
-             res.status(400).json({message:"invalid request"})
+             res.status(400).json({message:"Invalid Request"})
          }
         
             else{
@@ -497,7 +498,7 @@ router.post('/updateProfile', (req, res) => {
 
                 res.send({
                     url: photo._doc.url,
-                    message: "files uploaded succesfully"
+                    message: "Files Uploaded Succesfully"
                 });
             })
             .finally(function() {
@@ -524,7 +525,7 @@ router.post('/updateProfile', (req, res) => {
                 res.send({
 
                     images: image,
-                    message: "image fetched succesfully"
+                    message: "Image Fetched Succesfully"
                 });
             })
 
@@ -569,10 +570,8 @@ message: err.message
 //======================================================================//
 router.post("/shareReports",(req,res)=>{
     const email = req.body.email
-    console.log(email)
-
     const token = req.body.token
-    console.log(token)
+ 
     if(!email||!token){
         res.status(400).json({
             message: 'Invalid Request !'
@@ -581,23 +580,24 @@ router.post("/shareReports",(req,res)=>{
     console.log("hello")
 
     
-    var remoteHost = "192.168.0.20:8000"
+    var remoteHost = "119.81.59.59:8000"
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
-   console.log(link);
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
+                           from: '"PHR Service"<risabhsharma71@gmail.com>',
                            to: email,
                            subject: 'click the link to check reports',
-   
+                
                            html: "Hello,<br> Please Click on the link to see reports.<br><a href=" + link + ">Click here to see reports</a>"
                        };
                        transporter.sendMail(mailOptions, (error, info) => {
-                           if (error) {}
-                        });
+                           if (error) {
+                               console.log(error)
+                           }
 
+                        });
                        res.status(200).json({
-                        message: "email sent"
+                        message: "Email Sent"
                       
                     })
 
@@ -618,7 +618,7 @@ router.post("/fmshareReports",(req,res)=>{
     console.log("hello")
 
     
-    var remoteHost = "192.168.0.20:8000"
+    var remoteHost = "119.81.59.59:8000"
     var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + rapidID;
    console.log(link);
                        var mailOptions = {
@@ -634,7 +634,7 @@ router.post("/fmshareReports",(req,res)=>{
                         });
 
                        res.status(200).json({
-                        message: "email sent"
+                        message: "Email Sent"
                       
                     })
 

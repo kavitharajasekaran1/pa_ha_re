@@ -31,12 +31,12 @@ exports.builded=(rapidID) =>{
              if(build.length<1){  
         resolve({
               status: 201,
-                message:"please build Profile"
+                message:"Please Build Profile"
             })
         }else{  
         reject({ 
              status: 409,
-             message:"profile already built"
+             message:"Profile Already Built"
            })
         }
         })
@@ -45,7 +45,7 @@ exports.builded=(rapidID) =>{
 
                     reject({
                         status: 500,
-                        message: 'internal server error'
+                        message: 'Internal Server Error'
                     });
             });
 

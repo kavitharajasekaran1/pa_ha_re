@@ -68,15 +68,14 @@ console.log(decoded)
 
                     reject({
                         status: 402,
-                        message: 'profile not built yet'
+                        message: 'Profile of the user not built yet'
                     });
                 }
             })
 
             
             .catch(err => reject({
-                status: 500,
-                message: 'internal server error!'
+                message: 'Internal Server Error!'
             }));
 
 	})

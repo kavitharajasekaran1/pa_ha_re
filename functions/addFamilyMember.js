@@ -22,13 +22,13 @@ exports.add = (rapidID,fmRapidID) =>
                 if(owner[0].rapidID === fmRapidID){
                     resolve({
                         status: 200,
-                        message: "user added"
+                        message: "Family member Added"
                     });
                 }
                 else{
                     reject({
                         status: 402,
-                        message: 'wrong rapidID'
+                        message: 'Wrong RapidID'
                     });
                 }
             
@@ -37,6 +37,6 @@ exports.add = (rapidID,fmRapidID) =>
     })
             .catch(err => reject({
                 status: 500,
-                message: 'register please!'
+                message: 'Register Please!'
             }))
     });

@@ -47,7 +47,7 @@ var transactionEntity = nem.model.transactions.prepare("transferTransaction")(co
     
             .then(() => resolve({
                 status: 201,
-                message: 'profile building completed Sucessfully !'
+                message: 'Profile built completed Sucessfully !'
             }))})
 
             .catch(err => {

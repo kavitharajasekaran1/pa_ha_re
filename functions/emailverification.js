@@ -22,7 +22,7 @@ exports.emailverification = (querymail) => {
 
             if (err.code == 11000) {
 
-                return reject({status: 409, message: 'cant fetch !'});
+                return reject({status: 409, message: 'Cant Fetch !'});
 
             } else {
                 console.log("error occurred" + err);

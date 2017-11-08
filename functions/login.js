@@ -26,7 +26,7 @@ exports.loginUser = (Email, Password) =>
 
                     reject({
                         status: 402,
-                        message: ' email or password wrong!'
+                        message: ' Email or Password wrong!'
                     });
                 }
             })
@@ -51,7 +51,7 @@ exports.loginUser = (Email, Password) =>
 
             .catch(err => reject({
                 status: 500,
-                message: 'register please!'
+                message: 'Register Please!'
             }));
 
 
