@@ -16,6 +16,6 @@ var Photo = mongoose.Schema({
 
 });
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://rpqb:rpqb123@ds131583.mlab.com:31583/digitalid', { useMongoClient: true });
+mongoose.connect('mongodb://rpqb:rpqb123@ds251845.mlab.com:51845/phr', { useMongoClient: true });
 
 module.exports = mongoose.model('files', Photo);
