@@ -542,8 +542,8 @@ router.get('/getresults',(req,res)=>{
              console.log(rapidID)
         getresults.reports(rapidID)
         .then(result => {  
-
-                       
+                      console.log(result)
+                     console.log("printing the index.pug file")  
             res.render('index', {title:"PHR", permanent:result.message})
 })
 .catch(err => res.status(err.status).json({
