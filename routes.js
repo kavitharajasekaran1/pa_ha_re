@@ -584,7 +584,7 @@ router.post("/shareReports",(req,res)=>{
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<risabhsharma71@gmail.com>',
+                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
                            to: email,
                            subject: 'click the link to check reports',
                 
