@@ -1,1 +1,29 @@
+html
+head
 
+- var per = permanent[0].profileObj
+ p Welcome to #{title}
+ h1= "Basic information of patient"
+ul    
+      li= "Name" + ': ' + JSON.stringify(per.Name)
+      li= "Gender" + ': ' + JSON.stringify(per.GenderType)
+      li= "Address" + ': ' + JSON.stringify(per.Address)
+      li= "Medical History" + ':'+JSON.stringify(per.MedicalHistory)
+      li= "DOB" + ': ' + JSON.stringify(per.DOB)
+      li= "FamilyPhysicianName" + ': ' + JSON.stringify(per.FamilyPhysicianName)
+      li= "Registered" + ': ' + JSON.stringify(permanent[0].created_at)
+h1= "Patients health records"
+
+- for(let i=1;i<permanent.length;i++){
+- console.log("growAble    "+permanent[i])
+ li= "Remarks"+ ' : '+JSON.stringify(permanent[i].growableObj.Remarks)
+ li= "DiseaseType"+ ' : '+JSON.stringify(permanent[i].growableObj.DiseaseType)
+ li= "PulseRate"+ ' : '+JSON.stringify(permanent[i].growableObj.PulseRate)
+ li= "BloodPressure"+ ' : '+JSON.stringify(permanent[i].growableObj.BloodPressure)
+ li= "Weight"+ ' : '+JSON.stringify(permanent[i].growableObj.Weight)
+ li= "Height"+ ' : '+JSON.stringify(permanent[i].growableObj.Height)
+ li= "Blood"+ ' : '+JSON.stringify(permanent[i].growableObj.Blood)
+ li= "Last Visited "+ ' : '+JSON.stringify(permanent[i].created_at)
+-}
+
+        
