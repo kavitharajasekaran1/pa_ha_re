@@ -553,9 +553,8 @@ router.get('/getresults',(req,res)=>{
 });
 //==================================================================================//
 router.get('/fmgetresults',(req,res)=>{ 
-    var rapidID1 =encodeURIComponent(req.query.rapidID);
-    console.log(rapidID1)
-    var rapidID = decodeURI(rapidID1)
+    var rapidID =decodeURIComponent(req.query.rapidID);
+    console.log(rapidID)
     console.log(rapidID)
 getresults.reports(rapidID)
 .then(result => {  
