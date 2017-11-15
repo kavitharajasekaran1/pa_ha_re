@@ -542,8 +542,8 @@ router.get('/getresults',(req,res)=>{
              console.log(rapidID)
         getresults.reports(rapidID)
         .then(result => {  
-                      console.log(result)
-                     console.log("printing the index.pug file")  
+
+                       
             res.render('index', {title:"PHR", permanent:result.message})
 })
 .catch(err => res.status(err.status).json({
@@ -553,10 +553,14 @@ router.get('/getresults',(req,res)=>{
 });
 //==================================================================================//
 router.get('/fmgetresults',(req,res)=>{ 
-    var rapidID =req.query.rapidID
+    var rapidID1 =encodeURIComponent(req.query.rapidID);
+    console.log(rapidID1)
+    var rapidID2 =url.enocde
+    var rapidID = decodeURI(rapidID1)
     console.log(rapidID)
 getresults.reports(rapidID)
 .then(result => {  
+    console.log(result)
 
               
    res.render('index', {title:"PHR", permanent:result.message})
@@ -610,6 +614,7 @@ router.post("/fmshareReports",(req,res)=>{
     const email = req.body.email
     const token = req.body.token
     const rapidID = req.body.rapidID
+    console.log(rapidID);
     if(!email||!token||!rapidID){
         res.status(400).json({
             message: 'Invalid Request !'
@@ -619,7 +624,7 @@ router.post("/fmshareReports",(req,res)=>{
 
     
     var remoteHost = "119.81.59.59:8000"
-    var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + rapidID;
+    var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + encodeURIComponent(rapidID);;
    console.log(link);
                        var mailOptions = {
                            transport: transporter,
