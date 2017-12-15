@@ -9,8 +9,7 @@ exports.reports=(rapidID) =>{
             "rapidID":rapidID
         })
         .then((reports) =>{
-          
-            for(let i=0;i<reports.length;i++){
+              for(let i=0;i<reports.length;i++){
               record.push(reports[i])
             }
             console.log(record)
