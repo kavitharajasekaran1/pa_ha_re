@@ -28,7 +28,7 @@ exports.builded=(rapidID) =>{
                 console.log(notbuild)
              }
             }
-             if(build.length<1){  
+             if (build.length<1){  
         resolve({
               status: 201,
                 message:"Please Build Profile"

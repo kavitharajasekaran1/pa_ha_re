@@ -21,7 +21,7 @@ exports.registerUser = (registerObj,Email,Password,Type,nem_id,rapidID,privateKe
            encodedMail:encodedMail,
           created_at: new Date(),
            });
-      
+             console.log(newUser)
         newUser.save()
 
 

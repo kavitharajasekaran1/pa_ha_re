@@ -22,25 +22,26 @@ exports.getProfile = ((address) =>{
     console.log("error");
 	}
 	else{
+        console.log(res.data)
 		var message= (res.data[i].transaction.message.payload);
       decoded.push(nem.utils.format.hexToUtf8(message));
     
     }
 }
-console.log(decoded)
+console.log("rfsdrsrsarsa",decoded)
 		report.find({"referenceid":decoded})
 
 		.then(reports => {
             var profileObj =[];
             var growableObj =[];
-               console.log("length of reports",reports.length)
+             
                 for(let i=0;i<reports.length;i++){
 
                     if(reports[i]._doc.profileObj){
                        
                         profileObj.push(reports[i]._doc.profileObj)
                     }else{
-                        console.log(reports[i]._doc.created_at)
+                       
                         const mydate =(reports[i]._doc.created_at)
                         console.log(mydate)
                         const date =  mydate.substr(0, 15);

@@ -60,8 +60,10 @@ router.post('/registerUser', cors(),function(req,res)
 {
 
 const registerObj = req.body.registerObj;
+console.log("registerObj",registerObj); 
 const Email = req.body.Email;
- const Password = req.body.Password;
+ const Password = crypto.createHash('sha256').update(req.body.Password).digest('base64');
+ console.log("password",Password);
 const rapidID = crypto.createHash('sha256').update(Email).digest('base64');
 console.log("rapidID",rapidID);
 var otp = "";
@@ -76,7 +78,7 @@ const walletName = Email;
 const password = Password;
 // Create PRNG wallet
 const nem_id = nem.model.wallet.createPRNG(walletName, password, nem.model.network.data.mijin.id);
-console.log(nem_id);
+
 var endpoint =nem.model.objects.create("endpoint")("http://b1.nem.foundation", "7895");
 // Create a common object
  var common = nem.model.objects.create("common")(password, "");
@@ -142,7 +144,8 @@ console.log(link);
 
         const Email = req.body.Email;
            console.log(Email)
-        const Password = req.body.Password;
+        const Password1 = req.body.Password;
+        const Password= crypto.createHash('sha256').update(Password1).digest('base64')
      console.log(Password)
 
         if (!Email) {
@@ -553,10 +556,12 @@ router.get('/getresults',(req,res)=>{
 });
 //==================================================================================//
 router.get('/fmgetresults',(req,res)=>{ 
-    var rapidID =req.query.rapidID
+    var rapidID =decodeURIComponent(req.query.rapidID);
+    console.log(rapidID)
     console.log(rapidID)
 getresults.reports(rapidID)
 .then(result => {  
+    console.log(result)
 
               
    res.render('index', {title:"PHR", permanent:result.message})
@@ -584,7 +589,7 @@ router.post("/shareReports",(req,res)=>{
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<risabhsharma71@gmail.com>',
+                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
                            to: email,
                            subject: 'click the link to check reports',
                 
@@ -610,6 +615,7 @@ router.post("/fmshareReports",(req,res)=>{
     const email = req.body.email
     const token = req.body.token
     const rapidID = req.body.rapidID
+    console.log(rapidID);
     if(!email||!token||!rapidID){
         res.status(400).json({
             message: 'Invalid Request !'
@@ -619,7 +625,7 @@ router.post("/fmshareReports",(req,res)=>{
 
     
     var remoteHost = "119.81.59.59:8000"
-    var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + rapidID;
+    var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + encodeURIComponent(rapidID);;
    console.log(link);
                        var mailOptions = {
                            transport: transporter,
@@ -642,8 +648,62 @@ router.post("/fmshareReports",(req,res)=>{
          
         }
     });
+//================================================================================================//
+router.post("/sos",(req,res)=>{
+  
+    if (!checkToken(req)) {
+        console.log("invalid token")
+        return res.status(401).json({
+            message: "Invalid Token"
+        })
+     }
+     const longitude = req.body.Longitude;
+     console.log(longitude)
+     const lattitude = req.body.Latitude;
+     console.log(lattitude)
+     const userObj = getAddress(req);
+     const emergency = userObj.users.registerObj.Eemail[0];
+     const FirstName =userObj.users.registerObj.FirstName
+    
 
-//===========================================================================
+    if(!emergency||!userObj){
+        res.status(400).json({
+            message: 'Invalid Request !'
+    })
+} else {
+    for(var propName in emergency) {
+        emergency.hasOwnProperty(propName)
+            var propValue = emergency[propName];
+            console.log(propValue)
+    var link = "https://maps.google.com/maps?q="+lattitude+","+longitude+"&hl=es";
+   var link1 ="https://maps.googleapis.com/maps/api/staticmap?center="+lattitude+","+longitude+"+&zoom=12&size=300x300"
+                       var mailOptions = {
+                           transport: transporter,
+                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
+                           to: propValue,
+                           subject: 'urgent emergency',
+                           text :FirstName+" is in an emergency please contact him as soon as possible",
+                            html:"<a href="+link+">Click here to open in maps</a><img src= "+link1+" ></img><br>"
+                            
+                       
+                             
+                          
+                        };
+                       transporter.sendMail(mailOptions, (error, info) => {
+                           if (error) {}
+                        });
+                    }
+                       res.status(200).json({
+                        message: "Email Sent to the emergency contacts"
+                      
+                    })
+
+            
+         
+        }
+    });
+
+//==========================================================================================================//
          function checkToken(req) {
 
         const token = req.headers['x-access-token'];
