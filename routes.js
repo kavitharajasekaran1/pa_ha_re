@@ -300,7 +300,7 @@ message: err.message
          const requestObj = getAddress(req);
          const address =requestObj.users.nem_id.accounts[0].address;
          console.log("address",address)
-         const rAddress = "MAXS2BX5ZYI7H6ULCSFT7RT5A3CNJO2VQC7AWP5H";
+         const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
          const profileObj = req.body.profileObj;
          const referenceid =crypto.createHash('sha256').update(JSON.stringify(profileObj)).digest('base64');
          console.log("refernce id",referenceid)
@@ -340,7 +340,7 @@ router.post('/updateProfile', (req, res) => {
     const requestObj = getAddress(req);
     const address =requestObj.users.nem_id.accounts[0].address;
     console.log("address",address)
-    const rAddress = "MAXS2BX5ZYI7H6ULCSFT7RT5A3CNJO2VQC7AWP5H";
+    const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
      const growableObj = req.body.growableObj;
     const referenceid =crypto.createHash('sha256').update(JSON.stringify(growableObj)).digest('base64');
     console.log("refernce id",referenceid);
