@@ -34,16 +34,6 @@ const nodemailer = require('nodemailer');
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({apiKey: '814c55ce', apiSecret: '942e6e2cc98f7802'});
 
-// connection to email API
-var transporter = nodemailer.createTransport("SMTP", {
-    host: 'smtp.ipage.com',
-    port: 587,
-    secure: true,
-    auth: {
-        user: "risabh.sharma@rapidqube.com",
-        pass: "Rpqb@12345"
-    }
-});
 module.exports = router => {
 
     cloudinary.config({
@@ -106,17 +96,29 @@ if (!Email || !Password) {
 
             .then(result => {
                 
-         var remoteHost = "119.81.59.59:8000"
+         //var remoteHost = "119.81.59.59:8000"
+		 var remoteHost = "188.42.97.27:8000"
  var link = "http://" + remoteHost + "/email/verify?mail=" + encodedMail;
 console.log(link);
+// connection to email API
+var transporter = nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: "manoj.venkateswararaja@rapidqube.com",
+        pass: "Rpqb@123"
+    }
+});
+
                     var otptosend = otp;
                     var mailOptions = {
                         transport: transporter,
-                        from: '"PHR Service"<risabh.sharma@rapidqube.com>',
+                        from: '"PHR Service"<manoj.venkateswararaja@rapidqube.com>',
                         to: Email,
                         subject: 'Please confirm your Email account',
 
-                        html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+                        html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a><br><br>OTP: "+ otptosend +""
                     };
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {}
@@ -300,7 +302,9 @@ message: err.message
          const requestObj = getAddress(req);
          const address =requestObj.users.nem_id.accounts[0].address;
          console.log("address",address)
-         const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
+         //const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
+	 //const rAddress = "MAZ72B-MW7PPU-QT4OJL-WGOQ5V-6ZYBCX-VPFF6J-XRI5";
+	const rAddress = "MDLRB3-ZGREXM-ZHROMS-DY3SQA-QSUOUP-3ZYZ3V-27HU";
          const profileObj = req.body.profileObj;
          const referenceid =crypto.createHash('sha256').update(JSON.stringify(profileObj)).digest('base64');
          console.log("refernce id",referenceid)
@@ -340,7 +344,9 @@ router.post('/updateProfile', (req, res) => {
     const requestObj = getAddress(req);
     const address =requestObj.users.nem_id.accounts[0].address;
     console.log("address",address)
-    const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
+    //const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
+	//const rAddress = "MAZ72B-MW7PPU-QT4OJL-WGOQ5V-6ZYBCX-VPFF6J-XRI5";
+	const rAddress = "MDLRB3-ZGREXM-ZHROMS-DY3SQA-QSUOUP-3ZYZ3V-27HU";
      const growableObj = req.body.growableObj;
     const referenceid =crypto.createHash('sha256').update(JSON.stringify(growableObj)).digest('base64');
     console.log("refernce id",referenceid);
@@ -583,13 +589,24 @@ router.post("/shareReports",(req,res)=>{
     })
 } else {
     console.log("hello")
+// connection to email API
+var transporter = nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: "manoj.venkateswararaja@rapidqube.com",
+        pass: "Rpqb@123"
+    }
+});
 
     
-    var remoteHost = "119.81.59.59:8000"
+    //var remoteHost = "119.81.59.59:8000"
+	var remoteHost = "188.42.97.27:8000"
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
+                           from: '"PHR Service"<manoj.venkateswararaja@rapidqube.com>',
                            to: email,
                            subject: 'click the link to check reports',
                 
@@ -623,13 +640,24 @@ router.post("/fmshareReports",(req,res)=>{
 } else {
     console.log("hello")
 
+// connection to email API
+var transporter = nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: "manoj.venkateswararaja@rapidqube.com",
+        pass: "Rpqb@123"
+    }
+});
     
-    var remoteHost = "119.81.59.59:8000"
+    //var remoteHost = "119.81.59.59:8000"
+	var remoteHost = "188.42.97.27:8000"
     var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + encodeURIComponent(rapidID);;
    console.log(link);
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
+                           from: '"PHR Service"<manoj.venkateswararaja@rapidqube.com>',
                            to: email,
                            subject: 'click the link to get result',
    
@@ -679,7 +707,7 @@ router.post("/sos",(req,res)=>{
    var link1 ="https://maps.googleapis.com/maps/api/staticmap?center="+lattitude+","+longitude+"+&zoom=12&size=300x300"
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<risabh.sharma@rapidqube.com>',
+                           from: '"PHR Service"<vikram.viswanathan@rapidqube.com>',
                            to: propValue,
                            subject: 'urgent emergency',
                            text :FirstName+" is in an emergency please contact him as soon as possible",
