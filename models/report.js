@@ -16,6 +16,6 @@ const reportSchema = mongoose.Schema({
 
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://rpqb:rpqb123@ds251845.mlab.com:51845/phr', { useMongoClient: true });
+mongoose.connect('mongodb://manoj:manoj123@ds111492.mlab.com:11492/phr',{ useNewUrlParser: true });
 
 module.exports = mongoose.model('report', reportSchema);
