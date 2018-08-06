@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
 mongoose.Promise = global.Promise;
 
 //mongoose.connect('mongodb://rpqb:rpqb123@ds131583.mlab.com:31583/digitalid', { useMongoClient: true });
-mongoose.connect('mongodb://manoj:manoj123@ds111492.mlab.com:11492/phr',{ useNewUrlParser: true });
+mongoose.connect('mongodb://phr:phr12345@ds211592.mlab.com:11592/phr',{ useNewUrlParser: true });
 
 
 module.exports = mongoose.model('user', userSchema);
