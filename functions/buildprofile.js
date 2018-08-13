@@ -18,11 +18,11 @@ var transferTransaction = nem.model.objects.create("transferTransaction")(rAddre
 
 // Prepare the transfer transaction object
 var transactionEntity = nem.model.transactions.prepare("transferTransaction")(common, transferTransaction, nem.model.network.data.mijin.id);
-
+console.log('manoj')
 //Serialize transfer transaction and announce
     nem.model.transactions.send(common, transactionEntity, endpoint)
     .then(function(res) {
-    
+    console.log(res)
             const newReport = new report({
                 
                   profileObj : profileObj,

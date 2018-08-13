@@ -5,14 +5,14 @@ head
  p Welcome to #{title}
  h1= "Basic information of patient"
 ul    
-      li= "Name" + ': ' + JSON.stringify(per.Name)
-      li= "Gender" + ': ' + JSON.stringify(per.GenderType)
-      li= "Address" + ': ' + JSON.stringify(per.Address)
-      li= "Medical History" + ':'+JSON.stringify(per.MedicalHistory)
-      li= "DOB" + ': ' + JSON.stringify(per.DOB)
-      li= "FamilyPhysicianName" + ': ' + JSON.stringify(per.FamilyPhysicianName)
+      li= "Name" + ': ' + JSON.stringify(per.name)
+      li= "Gender" + ': ' + JSON.stringify(per.gendertype)
+      li= "Address" + ': ' + JSON.stringify(per.address)
+      li= "Medical History" + ':'+JSON.stringify(per.medicalhistory)
+      li= "DOB" + ': ' + JSON.stringify(per.dob)
+      li= "FamilyPhysicianName" + ': ' + JSON.stringify(per.pname)
       li= "Registered" + ': ' + JSON.stringify(permanent[0].created_at)
-h1= "Patients health records"
+- h1= "Patients health records"
 
 - for(let i=1;i<permanent.length;i++){
 - console.log("growAble    "+permanent[i])

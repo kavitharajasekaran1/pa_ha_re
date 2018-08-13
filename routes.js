@@ -107,7 +107,7 @@ var transporter = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "manoj.venkateswararaja@rapidqube.com",
-        pass: "Rpqb@123"
+       pass: "Rpqb12345"
     }
 });
 
@@ -524,6 +524,7 @@ router.post('/updateProfile', (req, res) => {
         Photo.find({
                 "rapidID": rapidID
             })
+        
             .then((images) => {
                 var image = [];
                 for (let i = 0; i < images.length; i++) {
@@ -545,17 +546,17 @@ router.post('/updateProfile', (req, res) => {
 //check sending
 router.get('/getresults',(req,res)=>{ 
              var token =req.query.token
+             console.log("token",token)
              
              var decoded = jwt.verify(token, config.secret);
              var rapidID =(decoded.users.rapidID)
              console.log(rapidID)
         getresults.reports(rapidID)
         .then(result => {  
-
-                       
+             console.log("result",result.message)
             res.render('index', {title:"PHR", permanent:result.message})
 })
-.catch(err => res.status(err.status).json({
+.catch(err => res.status(500).json({
     message: err.message
 }));
 
@@ -568,9 +569,10 @@ router.get('/fmgetresults',(req,res)=>{
 getresults.reports(rapidID)
 .then(result => {  
     console.log(result)
+ 
 
               
-   res.render('index', {title:"PHR", permanent:result.message})
+//    res.render('index', {title:"PHR", permanent:result.message})
 })
 .catch(err => res.status(err.status).json({
 message: err.message
@@ -581,7 +583,9 @@ message: err.message
 //======================================================================//
 router.post("/shareReports",(req,res)=>{
     const email = req.body.email
+    console.log(email)
     const token = req.body.token
+    console.log(token)
  
     if(!email||!token){
         res.status(400).json({
@@ -596,13 +600,13 @@ var transporter = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "manoj.venkateswararaja@rapidqube.com",
-        pass: "Rpqb@123"
+        pass: "Rpqb12345"
     }
 });
 
     
     //var remoteHost = "119.81.59.59:8000"
-	var remoteHost = "188.42.97.27:8000"
+	var remoteHost = "localhost:8000"
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
