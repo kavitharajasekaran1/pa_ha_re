@@ -12,18 +12,43 @@ ul
       li= "DOB" + ': ' + JSON.stringify(per.dob)
       li= "FamilyPhysicianName" + ': ' + JSON.stringify(per.pname)
       li= "Registered" + ': ' + JSON.stringify(permanent[0].created_at)
-- h1= "Patients health records"
+
+
+//-var per = permanent[1].growableObj
+
+
+ //p Welcome to #{title}
+
+
+ h1= "Patients Health Records"
 
 - for(let i=1;i<permanent.length;i++){
-- console.log("growAble    "+permanent[i])
+//- console.log("growAble    "+permanent[i])
+//- console.log("growableObj    "+permanent[i])
 
- <br />
- li= "Remarks"+ ' : '+JSON.stringify(permanent[i].growableObj.Remarks)
- li= "DiseaseType"+ ' : '+JSON.stringify(permanent[i].growableObj.DiseaseType)
- li= "PulseRate"+ ' : '+JSON.stringify(permanent[i].growableObj.PulseRate)
- li= "BloodPressure"+ ' : '+JSON.stringify(permanent[i].growableObj.BloodPressure)
- li= "Weight"+ ' : '+JSON.stringify(permanent[i].growableObj.Weight)
- li= "Height"+ ' : '+JSON.stringify(permanent[i].growableObj.Height)
- li= "Blood"+ ' : '+JSON.stringify(permanent[i].growableObj.Blood)
+ //<br />
+ 
+
+ //li= "Remarks"+ ' : '+JSON.stringify(permanent[i].growableObj.Remarks)
+ //li= "DiseaseType"+ ' : '+JSON.stringify(permanent[i].growableObj.DiseaseType)
+ //li= "PulseRate"+ ' : '+JSON.stringify(permanent[i].growableObj.PulseRate)
+ //li= "BloodPressure"+ ' : '+JSON.stringify(permanent[i].growableObj.BloodPressure)
+ //li= "Weight"+ ' : '+JSON.stringify(permanent[i].growableObj.Weight)
+ //li= "Height"+ ' : '+JSON.stringify(permanent[i].growableObj.Height)
+ //li= "Blood"+ ' : '+JSON.stringify(permanent[i].growableObj.Blood)
+ //li= "Last Visited "+ ' : '+JSON.stringify(permanent[i].created_at)
+
+ul
+ li= "Blood"+ ' : '+JSON.stringify(permanent[i].growableObj.blood)
+ li= "Height"+ ' : '+JSON.stringify(permanent[i].growableObj.height)
+ li= "Weight"+ ' : '+JSON.stringify(permanent[i].growableObj.weight)
+ li= "BloodPressure"+ ' : '+JSON.stringify(permanent[i].growableObj.bloodpressure)
+ li= "PulseRate"+ ' : '+JSON.stringify(permanent[i].growableObj.pulserate)
+ li= "Tempture"+ ' : '+JSON.stringify(permanent[i].growableObj.tempture)
+ li= "DiseaseType"+ ' : '+JSON.stringify(permanent[i].growableObj.diseasetype)
+ li= "Remarks"+ ' : '+JSON.stringify(permanent[i].growableObj.remarks)
  li= "Last Visited "+ ' : '+JSON.stringify(permanent[i].created_at)
--}
+
+
+
+-} 

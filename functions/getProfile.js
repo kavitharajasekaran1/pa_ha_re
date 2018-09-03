@@ -61,9 +61,10 @@ console.log("rfsdrsrsarsa",decoded)
 
 			resolve({
                         status: 200,
-                        "growableObj": growableObj,
-                        "profileObj":profileObj
-                    });
+                       
+                        "profileObj":profileObj,
+                        "growableObj": growableObj
+                    })
 
                  }else {
 

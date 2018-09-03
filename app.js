@@ -10,7 +10,7 @@ var swaggerDefinition = {
       version: '1.0.0',
       description: 'Demonstrating how to describe a RESTful API with Swagger',
     },
-    host: 'localhost:8000',
+    host: 'localhost:8001',
     basePath: '/',
   };
   
@@ -28,7 +28,7 @@ const bodyParser = require('body-parser');
 const logger 	   = require('morgan');
 const router 	   = express.Router();
 
-const port 	   = process.env.PORT || 8000;
+const port 	   = process.env.PORT || 8001;
 
 app.use(bodyParser.json());
 app.use(logger('dev'));

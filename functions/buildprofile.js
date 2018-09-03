@@ -32,12 +32,19 @@ console.log('manoj')
                 });
               
                 newReport.save()
+
+                console.log("newReport",profileObj)
             })
     
-            .then(() => resolve({
+            .then(() => {
+            console.log("nnewReport1234",profileObj) 
+            return resolve({
                 status: 201,
-                message: 'Profile Built Sucessfully !'
-            }))
+                message: 'Profile Built Sucessfully !',
+                newReport:profileObj
+
+            })
+        })
 
             .catch(err => {
 

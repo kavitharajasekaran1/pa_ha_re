@@ -22,6 +22,7 @@ const nem = require("nem-sdk").default;
  const fmBuildProfile = require('./functions/fmBuildProfile');
  const updateProfile =require('./functions/updateprofile');
  const fmUpdateProfile =require('./functions/fmUpdateProfile');
+ const buildupdate =require('./functions/buildupdate');
 
  const editProfile = require('./functions/editprofile');
  const getresults = require('./functions/getresults')
@@ -97,7 +98,8 @@ if (!Email || !Password) {
             .then(result => {
                 
          //var remoteHost = "119.81.59.59:8000"
-		 var remoteHost = "188.42.97.27:8000"
+         //var remoteHost = "188.42.97.27:8000"
+         var remoteHost = "localhost:8001"
  var link = "http://" + remoteHost + "/email/verify?mail=" + encodedMail;
 console.log(link);
 // connection to email API
@@ -106,15 +108,15 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "manoj.venkateswararaja@rapidqube.com",
-       pass: "Rpqb12345"
+        user: "donotreply@rapidqube.com",
+       pass: "Leha1412"
     }
 });
 
                     var otptosend = otp;
                     var mailOptions = {
                         transport: transporter,
-                        from: '"PHR Service"<manoj.venkateswararaja@rapidqube.com>',
+                        from: '"PHR Service"<donotreply@rapidqube.com>',
                         to: Email,
                         subject: 'Please confirm your Email account',
 
@@ -292,45 +294,47 @@ message: err.message
 }))
 })
 //===============================================================================//
-    router.post('/buildProfile', (req, res) => {
-         if (!checkToken(req)) {
-            console.log("invalid token")
-            return res.status(401).json({
-                message: "Invalid Token"
-            })
-         }
-         const requestObj = getAddress(req);
-         const address =requestObj.users.nem_id.accounts[0].address;
-         console.log("address",address)
-         //const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
-	 //const rAddress = "MAZ72B-MW7PPU-QT4OJL-WGOQ5V-6ZYBCX-VPFF6J-XRI5";
-	const rAddress = "MDLRB3-ZGREXM-ZHROMS-DY3SQA-QSUOUP-3ZYZ3V-27HU";
-         const profileObj = req.body.profileObj;
-         const referenceid =crypto.createHash('sha256').update(JSON.stringify(profileObj)).digest('base64');
-         console.log("refernce id",referenceid)
-         const password = requestObj.users.Password;
-         const privateKey = requestObj.users.privateKey;
-         const rapidID = requestObj.users.rapidID;
-         console.log("rapidID",rapidID);
+router.post('/buildProfile', (req, res) => {
+    if (!checkToken(req)) {
+       console.log("invalid token")
+       return res.status(401).json({
+           message: "Invalid Token"
+       })
+    }
+    const requestObj = getAddress(req);
+    const address =requestObj.users.nem_id.accounts[0].address;
+    console.log("address",address)
+    //const rAddress = "MBIVQ6BIMGBQQL6A6DPV3DDT2LED3YQDEINWTPEV";
+//const rAddress = "MAZ72B-MW7PPU-QT4OJL-WGOQ5V-6ZYBCX-VPFF6J-XRI5";
+const rAddress = "MDLRB3-ZGREXM-ZHROMS-DY3SQA-QSUOUP-3ZYZ3V-27HU";
+    const profileObj = req.body.profileObj;
+    const referenceid =crypto.createHash('sha256').update(JSON.stringify(profileObj)).digest('base64');
+    console.log("refernce id",referenceid)
+    const password = requestObj.users.Password;
+    const privateKey = requestObj.users.privateKey;
+    const rapidID = requestObj.users.rapidID;
+    console.log("rapidID",rapidID);
 
-         if(!address||!profileObj){
-             res.status(400).json({message:"Invalid Request"})
-         }
-        
-            else{
-                buildProfile.dotx(rAddress,address,profileObj,password,privateKey,referenceid,rapidID)
+    if(!address||!profileObj){
+        res.status(400).json({message:"Invalid Request"})
+    }
+   
+       else{
+           buildProfile.dotx(rAddress,address,profileObj,password,privateKey,referenceid,rapidID)
 
-                  .then(result => {
-                        res.status(result.status).json({
-                        message: result.message
-                        });
+             .then(result => {
+                 console.log("result",result.newReport);
+                   res.status(result.status).json({
+                   message: result.message , 
+                   report:  result.newReport       
+                   });
 
-            })
-         .catch(err => res.status(err.status).json({
-                message: err.message
-            }))
-        }
-        });
+       })
+    .catch(err => res.status(err.status).json({
+           message: err.message
+       }))
+   }
+   });
  //===========================================================================//
  
 //===========================================================================//
@@ -395,7 +399,54 @@ router.post('/updateProfile', (req, res) => {
                  }));
   })
 
-   //===========================================================================================//        
+   //===========================================================================================//
+   //===========================================================================================//
+   router.get("/updatebuild",(req,res) =>{
+   
+    if (!checkToken(req)) {
+
+        console.log("invalid token")
+
+        return res.status(401).json({
+
+            message: "Invalid Token"
+
+        })
+
+     }
+
+     const address1 = getAddress(req);
+
+     const rapidID = address1.users.rapidID;
+
+     buildupdate.buildupdate(rapidID)
+
+     
+
+                       .then(result => {
+
+                             res.status(result.status).json({
+
+                             message:result.message,
+
+                             profileObj:result.cont
+
+                             });
+
+     
+
+                 })
+
+                          .catch(err => res.status(err.status).json({
+
+                     message: err.message
+
+                 }));
+
+  })
+
+
+   //===========================================================================================//
         router.get("/getProfile",(req,res) =>{
               if (!checkToken(req)) {
             console.log("invalid token")
@@ -411,7 +462,7 @@ router.post('/updateProfile', (req, res) => {
 
                   .then(result => {
                         res.status(result.status).json({
-                        profileObj:result.profileObj[0],
+                        profileObj:result.profileObj,
                         growableObj:result.growableObj
 
                         });
@@ -483,41 +534,76 @@ router.post('/updateProfile', (req, res) => {
    
         });
   //=========================================================================================//     
-      router.post('/UploadDocs', multipartMiddleware, function(req, res, next) {
-        const id1 = getAddress(req)
-        const rapidID =id1.users[0].rapidID
-        var photo = new Photo(req.body);
-        
-        console.log("req.files.image" + JSON.stringify(req.files));
-        var imageFile = req.files.file.path;
+  router.post('/UploadDocs', multipartMiddleware, function(req, res, next) {
+
+    var ui = req.body;
+
+    console.log("ui123",ui);
+
+  const id1 = getAddress(req)
+
+  console.log("id112345",id1)
+
+  const rapidID =id1.users.rapidID
+
+  console.log("rapidID1234",rapidID)
+
+  var photo = new Photo(req.body);
+
+  console.log("photo123",photo)
+
+  console.log("req.files.image" + JSON.stringify(req.files));
+
+  var imageFile = req.files.file.path;
+
+  cloudinary.uploader.upload(imageFile, {
+
+          tags: 'express_sample'
+
+      })
+
+      .then(function(image) {
+
+          console.log('** file uploaded to Cloudinary service');
+
+          console.dir(image);
+
+          photo.url = image.url;
+
+          photo.rapidID = rapidID;
+
+          // Save photo with image metadata
+
+          return photo.save();
+
+      })
+
+      .then(function(photo) {
+
+          res.send({
+
+              url: photo._doc.url,
+
+              message: "Files Uploaded Succesfully"
+
+          });
+
+      })
+
+      .finally(function() {
 
 
-        cloudinary.uploader.upload(imageFile, {
-                tags: 'express_sample'
-            })
-            .then(function(image) {
-                console.log('** file uploaded to Cloudinary service');
-                console.dir(image);
-                photo.url = image.url;
-                photo.rapidID = rapidID;
-                // Save photo with image metadata
-                return photo.save();
-            })
-            .then(function(photo) {
+          res.render('photos/create_through_server', {
 
-                res.send({
-                    url: photo._doc.url,
-                    message: "Files Uploaded Succesfully"
-                });
-            })
-            .finally(function() {
+              photo: photo,
 
-                res.render('photos/create_through_server', {
-                    photo: photo,
-                    upload: photo.image
-                });
-            });
-    });
+              upload: photo.image
+
+          });
+
+      })
+
+});
 //============================================================================//
     router.get('getUploads', (req, res) => {
         const rapidID = req.query.rapidID
@@ -562,17 +648,15 @@ router.get('/getresults',(req,res)=>{
 
 });
 //==================================================================================//
-router.get('/fmgetresults',(req,res)=>{ 
-    var rapidID =decodeURIComponent(req.query.rapidID);
-    console.log(rapidID)
-    console.log(rapidID)
+router.get('/fmgetresults',(req,res)=>{
+    console.log("fmreports"); 
+    var rapidID =req.query.rapidID;
+           console.log(rapidID)
+    //console.log(rapidID)
 getresults.reports(rapidID)
 .then(result => {  
-    console.log(result)
- 
-
-              
-//    res.render('index', {title:"PHR", permanent:result.message})
+    console.log("result",result.message)         
+   res.render('index', {title:"PHR", permanent:result.message})
 })
 .catch(err => res.status(err.status).json({
 message: err.message
@@ -599,18 +683,19 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "manoj.venkateswararaja@rapidqube.com",
-        pass: "Rpqb12345"
+        user: "donotreply@rapidqube.com",
+        pass: "Leha1412"
     }
 });
 
     
     //var remoteHost = "119.81.59.59:8000"
-	var remoteHost = "localhost:8000"
+    //var remoteHost = "188.42.97.27:8000"
+	var remoteHost = "localhost:8001"
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<manoj.venkateswararaja@rapidqube.com>',
+                           from: '"PHR Service"<donotreply@rapidqube.com>',
                            to: email,
                            subject: 'click the link to check reports',
                 
@@ -634,9 +719,11 @@ var transporter = nodemailer.createTransport({
 //=============================================================================================//
 router.post("/fmshareReports",(req,res)=>{
     const email = req.body.email
+    console.log(email)
     const token = req.body.token
+    console.log(token)
     const rapidID = req.body.rapidID
-    console.log(rapidID);
+    console.log(rapidID)
     if(!email||!token||!rapidID){
         res.status(400).json({
             message: 'Invalid Request !'
@@ -650,25 +737,29 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "manoj.venkateswararaja@rapidqube.com",
-        pass: "Rpqb@123"
+        user: "srileha.chandrasekaran@rapidqube.com",
+        pass: "Leha1412"
     }
 });
     
     //var remoteHost = "119.81.59.59:8000"
-	var remoteHost = "188.42.97.27:8000"
-    var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + encodeURIComponent(rapidID);;
-   console.log(link);
+    //var remoteHost = "188.42.97.27:8000"
+    var remoteHost = "localhost:8001"
+    var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + encodeURIComponent(rapidID);
+    //var link = `http://${remoteHost}/fmgetresults/?rapidID=${encodeURIComponent(rapidID)}`;
+   console.log(link)
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<manoj.venkateswararaja@rapidqube.com>',
+                           from: '"PHR Service"<srileha.chandrasekaran@rapidqube.com>',
                            to: email,
                            subject: 'click the link to get result',
    
                            html: "Hello,<br> Please Click on the link to see reports.<br><a href=" + link + ">Click here to see reports</a>"
                        };
                        transporter.sendMail(mailOptions, (error, info) => {
-                           if (error) {}
+                           if (error) {
+                               console.log(error)
+                           }
                         });
 
                        res.status(200).json({

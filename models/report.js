@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 const reportSchema = mongoose.Schema({
     
     
+    name:String,
     profileObj : Object,
     growableObj : Object,
     referenceid : String,
@@ -15,6 +16,10 @@ const reportSchema = mongoose.Schema({
 });
 
 
+//mongoose.Promise = global.Promise;
+//mongoose.connect('mongodb://phr:phr12345@ds211592.mlab.com:11592/phr',{ useNewUrlParser: true });
+
+//module.exports = mongoose.model('report', reportSchema);
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://phr:phr12345@ds211592.mlab.com:11592/phr',{ useNewUrlParser: true });
 
