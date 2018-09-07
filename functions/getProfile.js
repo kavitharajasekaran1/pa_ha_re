@@ -15,7 +15,8 @@ exports.getProfile = ((address) =>{
       //call for getting account data of a particular user
         nem.com.requests.account.transactions.all(endpoint, address)
         .then(function(res) {
-	console.log("\nAll transactions of the account:");
+    console.log("\nAll transactions of the account:");
+    console.log("res",response);
 	for (let i=0;i<res.data.length;i++){
 		if(!res.data[i].transaction.message)
 			{
@@ -25,6 +26,7 @@ exports.getProfile = ((address) =>{
         console.log(res.data)
 		var message= (res.data[i].transaction.message.payload);
       decoded.push(nem.utils.format.hexToUtf8(message));
+      console.log("sri",decoded);
     
     }
 }

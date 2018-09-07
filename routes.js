@@ -108,7 +108,7 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "donotreply@rapidqube.com",
+        user: "srileha.chandrasekaran@rapidqube.com",
        pass: "Leha1412"
     }
 });
@@ -116,7 +116,7 @@ var transporter = nodemailer.createTransport({
                     var otptosend = otp;
                     var mailOptions = {
                         transport: transporter,
-                        from: '"PHR Service"<donotreply@rapidqube.com>',
+                        from: '"PHR Service"<srileha.chandrasekaran@rapidqube.com>',
                         to: Email,
                         subject: 'Please confirm your Email account',
 
@@ -683,7 +683,7 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "donotreply@rapidqube.com",
+        user: "srileha.chandrasekaran@rapidqube.com",
         pass: "Leha1412"
     }
 });
@@ -695,7 +695,7 @@ var transporter = nodemailer.createTransport({
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<donotreply@rapidqube.com>',
+                           from: '"PHR Service"<srileha.chandrasekaran@rapidqube.com>',
                            to: email,
                            subject: 'click the link to check reports',
                 

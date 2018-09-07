@@ -2,6 +2,7 @@ html
 head
 
 - var per = permanent[0].profileObj
+
  p Welcome to #{title}
  h1= "Basic information of patient"
 ul    
@@ -22,7 +23,7 @@ ul
 
  h1= "Patients Health Records"
 
-- for(let i=1;i<permanent.length;i++){
+- for(let i=0;i<permanent.length;i++){
 //- console.log("growAble    "+permanent[i])
 //- console.log("growableObj    "+permanent[i])
 
@@ -44,7 +45,7 @@ ul
  li= "Weight"+ ' : '+JSON.stringify(permanent[i].growableObj.weight)
  li= "BloodPressure"+ ' : '+JSON.stringify(permanent[i].growableObj.bloodpressure)
  li= "PulseRate"+ ' : '+JSON.stringify(permanent[i].growableObj.pulserate)
- li= "Tempture"+ ' : '+JSON.stringify(permanent[i].growableObj.tempture)
+ li= "BodyTempture"+ ' : '+JSON.stringify(permanent[i].growableObj.tempture)
  li= "DiseaseType"+ ' : '+JSON.stringify(permanent[i].growableObj.diseasetype)
  li= "Remarks"+ ' : '+JSON.stringify(permanent[i].growableObj.remarks)
  li= "Last Visited "+ ' : '+JSON.stringify(permanent[i].created_at)
