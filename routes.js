@@ -108,15 +108,15 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "srileha.chandrasekaran@rapidqube.com",
-       pass: "Leha1412"
+        user: "donotreply@rapidqube.com",
+       pass: "RpQb@$2018"
     }
 });
 
                     var otptosend = otp;
                     var mailOptions = {
                         transport: transporter,
-                        from: '"PHR Service"<srileha.chandrasekaran@rapidqube.com>',
+                        from: '"PHR Service"<donotreply@rapidqube.com>',
                         to: Email,
                         subject: 'Please confirm your Email account',
 
@@ -683,10 +683,11 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "srileha.chandrasekaran@rapidqube.com",
-        pass: "Leha1412"
+        user: "donotreply@rapidqube.com",
+        pass: "RpQb@$2018"
     }
 });
+
 
     
     //var remoteHost = "119.81.59.59:8000"
@@ -695,7 +696,7 @@ var transporter = nodemailer.createTransport({
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<srileha.chandrasekaran@rapidqube.com>',
+                           from: '"PHR Service"<donotreply@rapidqube.com>',
                            to: email,
                            subject: 'click the link to check reports',
                 
@@ -737,8 +738,8 @@ var transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "srileha.chandrasekaran@rapidqube.com",
-        pass: "Leha1412"
+        user: "donotreply@rapidqube.com",
+        pass: "RpQb@$2018"
     }
 });
     
@@ -750,7 +751,7 @@ var transporter = nodemailer.createTransport({
    console.log(link)
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<srileha.chandrasekaran@rapidqube.com>',
+                           from: '"PHR Service"<donotreply@rapidqube.com>',
                            to: email,
                            subject: 'click the link to get result',
    
