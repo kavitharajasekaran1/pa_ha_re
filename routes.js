@@ -98,8 +98,8 @@ if (!Email || !Password) {
             .then(result => {
                 
          //var remoteHost = "119.81.59.59:8000"
-         //var remoteHost = "188.42.97.27:8000"
-         var remoteHost = "localhost:8001"
+         var remoteHost = "188.42.97.27:8000"
+         //var remoteHost = "localhost:8001"
  var link = "http://" + remoteHost + "/email/verify?mail=" + encodedMail;
 console.log(link);
 // connection to email API
@@ -691,8 +691,8 @@ var transporter = nodemailer.createTransport({
 
     
     //var remoteHost = "119.81.59.59:8000"
-    //var remoteHost = "188.42.97.27:8000"
-	var remoteHost = "localhost:8001"
+    var remoteHost = "188.42.97.27:8000"
+	//var remoteHost = "localhost:8001"
     var link = "http://" + remoteHost + "/getresults/?token=" + token;
                        var mailOptions = {
                            transport: transporter,
@@ -744,8 +744,8 @@ var transporter = nodemailer.createTransport({
 });
     
     //var remoteHost = "119.81.59.59:8000"
-    //var remoteHost = "188.42.97.27:8000"
-    var remoteHost = "localhost:8001"
+    var remoteHost = "188.42.97.27:8000"
+    //var remoteHost = "localhost:8001"
     var link = "http://" + remoteHost + "/fmgetresults/?rapidID=" + encodeURIComponent(rapidID);
     //var link = `http://${remoteHost}/fmgetresults/?rapidID=${encodeURIComponent(rapidID)}`;
    console.log(link)
