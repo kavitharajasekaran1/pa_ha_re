@@ -16,7 +16,7 @@ exports.getProfile = ((address) =>{
         nem.com.requests.account.transactions.all(endpoint, address)
         .then(function(res) {
     console.log("\nAll transactions of the account:");
-    console.log("res",response);
+    //console.log("res",response);
 	for (let i=0;i<res.data.length;i++){
 		if(!res.data[i].transaction.message)
 			{
@@ -63,9 +63,9 @@ console.log("rfsdrsrsarsa",decoded)
 
 			resolve({
                         status: 200,
-                       
-                        "profileObj":profileObj,
-                        "growableObj": growableObj
+                      
+                        profileObj:profileObj,
+                        growableObj: growableObj
                     })
 
                  }else {

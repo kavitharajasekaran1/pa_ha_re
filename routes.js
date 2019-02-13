@@ -462,6 +462,8 @@ router.post('/updateProfile', (req, res) => {
 
                   .then(result => {
                         res.status(result.status).json({
+
+                       
                         profileObj:result.profileObj,
                         growableObj:result.growableObj
 
@@ -783,27 +785,41 @@ router.post("/sos",(req,res)=>{
      }
      const longitude = req.body.Longitude;
      console.log(longitude)
-     const lattitude = req.body.Latitude;
-     console.log(lattitude)
+     const latitude = req.body.Latitude;
+     console.log(latitude)
      const userObj = getAddress(req);
-     const emergency = userObj.users.registerObj.Eemail[0];
-     const FirstName =userObj.users.registerObj.FirstName
+     console.log(userObj)
+     const emergency = userObj.users.Email;
+     console.log(emergency)
+     const FirstName =userObj.users.registerObj.name;
+     console.log(FirstName)
     
 
-    if(!emergency||!userObj){
+    
+     if(!emergency||!userObj){
         res.status(400).json({
             message: 'Invalid Request !'
     })
 } else {
-    for(var propName in emergency) {
-        emergency.hasOwnProperty(propName)
-            var propValue = emergency[propName];
+    for(var prop in emergency) {
+        emergency.hasOwnProperty(prop)
+            var propValue = emergency[prop];
             console.log(propValue)
     var link = "https://maps.google.com/maps?q="+lattitude+","+longitude+"&hl=es";
    var link1 ="https://maps.googleapis.com/maps/api/staticmap?center="+lattitude+","+longitude+"+&zoom=12&size=300x300"
+
+   var transporter = nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: "srileha.chandrasekaran@rapidqube.com",
+       pass: "Leha141295"
+    }
+ });
                        var mailOptions = {
                            transport: transporter,
-                           from: '"PHR Service"<vikram.viswanathan@rapidqube.com>',
+                           from: '"PHR Service"<srileha.chandrasekaran@rapidqube.com>',
                            to: propValue,
                            subject: 'urgent emergency',
                            text :FirstName+" is in an emergency please contact him as soon as possible",
